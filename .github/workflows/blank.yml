@@ -2,7 +2,7 @@ name: images-sync
 
 on:
   schedule:
-    - cron: '0 0 0 1/1 *'
+    - cron: '0 */2 * * *'
   push:
     branches: [ main ]
   pull_request:

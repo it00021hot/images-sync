@@ -1,16 +1,36 @@
-# This is a basic workflow to help you get started with Actions
-
 name: images-sync
 
-# Controls when the action will run.
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
 jobs:
+  sync-dockerhub:
+    runs-on: ubuntu-20.04
+    container: setzero/images-sync:0.3.1
+    env:
+      TO_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      TO_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+    steps:
+      - name: sync dockerhub images
+        run: |
+          cat << EOF >config.yaml
+          from:
+            registry: https://registry-1.docker.io
+          to:
+            registry: https://registry.aliyuncs.com
+          names:
+            - bitnami/metallb-speaker:0.9.5-debian-10-r4
+          replace:
+            - old: bitnami/
+              new: it00021hot/
+          rules:
+            - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
+          EOF
+          sync-images --config config.yaml
+
   sync-quay:
     runs-on: ubuntu-20.04
     container: setzero/images-sync:0.3.1
@@ -54,7 +74,7 @@ jobs:
             - sig-storage/csi-attacher:v3.0.0
             - sig-storage/csi-provisioner:v2.0.0
             - sig-storage/csi-snapshotter:v3.0.0
-            - sig-storage/csi-resizer:v1.0.0              
+            - sig-storage/csi-resizer:v1.0.0
           replace:
             - old: sig-storage/
               new: it00021hot/

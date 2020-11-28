@@ -53,6 +53,8 @@ jobs:
             - sig-storage/csi-node-driver-registrar:v2.0.1
             - sig-storage/csi-attacher:v3.0.0
             - sig-storage/csi-provisioner:v2.0.0
+            - sig-storage/csi-snapshotter:v3.0.0
+            - sig-storage/csi-resizer:v1.0.0              
           replace:
             - old: sig-storage/
               new: it00021hot/

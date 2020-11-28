@@ -24,12 +24,12 @@ jobs:
           from:
             registry: https://quay.io
           to:
-            registry: https://registry.cn-shenzhen.aliyuncs.com
+            registry: https://registry.aliyuncs.com
           names:
             - cephcsi/cephcsi:v3.1.2
           replace:
             - old: cephcsi/
-              new: ls_zh/
+              new: it00021hot/
           rules:
             - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
           EOF

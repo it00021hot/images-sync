@@ -24,7 +24,7 @@ jobs:
           from:
             registry: https://quay.io
           to:
-            registry: registry.cn-shenzhen.aliyuncs.com
+            registry: https://registry.cn-shenzhen.aliyuncs.com
           names:
             - cephcsi/cephcsi:v3.1.2
           replace:

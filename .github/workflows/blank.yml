@@ -33,4 +33,5 @@ jobs:
           rules:
             - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
           EOF
+          docker login --username ${{secrets.DOCKERHUB_USERNAME}} --password ${{ secrets.DOCKERHUB_TOKEN }} registry.cn-shenzhen.aliyuncs.com
           sync-images --config config.yaml

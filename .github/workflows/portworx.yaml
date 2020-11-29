@@ -30,6 +30,7 @@ jobs:
             - k8scsi/snapshot-controller:v2.1.0
             - k8scsi/csi-resizer:v0.5.0
             - coreos/prometheus-operator:v0.36.0
+            - coreos/configmap-reload:v0.0.1
           replace:
             - old: k8scsi/
               new: px-k8scsi/

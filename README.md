@@ -1,2 +1,2 @@
 # images-sync
-镜像同步
+rook镜像同步

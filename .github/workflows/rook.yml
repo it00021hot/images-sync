@@ -1,4 +1,4 @@
-name: images-sync
+name: rook
 
 on:
   schedule:
@@ -11,52 +11,76 @@ on:
 jobs:
   sync-quay:
     runs-on: ubuntu-20.04
-    container: setzero/images-sync:0.3.1
+    container: setzero/registry-manager
     env:
       TO_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       TO_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
     steps:
-      - name: sync quay images
-        run: |
-          cat << EOF >config.yaml
-          from:
-            registry: https://quay.io
-          to:
+    - name: Quay to Aliyun
+      run: |
+        cat << EOF >config.yaml
+        registries:
+          aliyuncs:
             registry: https://registry.aliyuncs.com
-          names:
+            username: $TO_USERNAME
+            password: $TO_PASSWORD
+          quay:
+            registry: https://quay.io
+            repositories:
             - cephcsi/cephcsi
+        sync-policy:
+          from: quay
+          to: aliyuncs
+          dry-run: false
           replace:
             - old: cephcsi/
-              new: it00021hot/
-          rules:
+              new: it00021hot
+          filters:
             - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
-          EOF
-          sync-images --config config.yaml
-
+        EOF
+        registry-manager sync -c config.yaml
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
+      with:
+        retain_days: 7
+        keep_minimum_runs: 3
   sync-gcr:
     runs-on: ubuntu-20.04
-    container: setzero/images-sync:0.3.1
+    container: setzero/registry-manager
     env:
       TO_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       TO_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
     steps:
-      - name: sync gcr images
-        run: |
-          cat << EOF >config.yaml
-          from:
-            registry: https://k8s.gcr.io
-          to:
+    - name: Gcr to Aliyun
+      run: |
+        cat << EOF >config.yaml
+        registries:
+          aliyuncs:
             registry: https://registry.aliyuncs.com
-          names:
+            username: $TO_USERNAME
+            password: $TO_PASSWORD
+          quay:
+            registry: https://k8s.gcr.io
+            repositories:
             - sig-storage/csi-node-driver-registrar
             - sig-storage/csi-attacher
             - sig-storage/csi-provisioner
             - sig-storage/csi-snapshotter
             - sig-storage/csi-resizer
+        sync-policy:
+          from: quay
+          to: aliyuncs
+          dry-run: false
           replace:
             - old: sig-storage/
               new: it00021hot/
-          rules:
+          filters:
             - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
-          EOF
-          sync-images --config config.yaml
+        EOF
+        registry-manager sync -c config.yaml
+
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
+      with:
+        retain_days: 7
+        keep_minimum_runs: 3

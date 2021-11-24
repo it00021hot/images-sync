@@ -34,7 +34,7 @@ jobs:
           dry-run: false
           replace:
             - old: cephcsi/
-              new: it00021hot
+              new: it00021hot/
           filters:
             - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
         EOF

@@ -1,0 +1,46 @@
+name: cert-manager
+
+on:
+  schedule:
+    - cron: '0 0 8 * *'
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  sync-quay:
+    runs-on: ubuntu-20.04
+    container: setzero/registry-manager
+    env:
+      TO_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      TO_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+    steps:
+    - name: Docker to Aliyun
+      run: |
+        cat << EOF >config.yaml
+        registries:
+          aliyuncs:
+            registry: https://registry.aliyuncs.com
+            username: $TO_USERNAME
+            password: $TO_PASSWORD
+          docker:
+            registry: https://docker.io
+            repositories:
+            - rancher
+        sync-policy:
+          from: docker
+          to: aliyuncs
+          dry-run: false
+          replace:
+            - old: rancher/
+              new: k8s-lzh/rancher_
+          filters:
+            - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
+        EOF
+        registry-manager sync -c config.yaml
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
+      with:
+        retain_days: 7
+        keep_minimum_runs: 3

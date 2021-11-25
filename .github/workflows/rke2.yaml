@@ -1,4 +1,4 @@
-name: cert-manager
+name: rke2
 
 on:
   schedule:

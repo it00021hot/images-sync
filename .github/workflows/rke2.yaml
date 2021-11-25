@@ -9,7 +9,7 @@ on:
     branches: [ main ]
 
 jobs:
-  sync-quay:
+  sync-docker:
     runs-on: ubuntu-20.04
     container: setzero/registry-manager
     env:
@@ -25,9 +25,9 @@ jobs:
             username: $TO_USERNAME
             password: $TO_PASSWORD
           docker:
-            registry: https://docker.io
+            registry: https://registry-1.docker.io
             repositories:
-            - rancher
+            - rancher/
         sync-policy:
           from: docker
           to: aliyuncs

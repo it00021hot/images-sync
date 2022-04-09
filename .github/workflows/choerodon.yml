@@ -27,9 +27,19 @@ jobs:
           quay:
             registry: https://registry.cn-shanghai.aliyuncs.com
             repositories:
-            - c7n/agile-service
-            - c7n/devops-service
-            - c7n/gitlab-service
+            - c7n/choerodon-register
+            - c7n/choerodon-platform
+            - c7n/choerodon-admin
+            - c7n/choerodon-asgard
+            - c7n/choerodon-gateway
+            - c7n/choerodon-oauth
+            - c7n/choerodon-iam
+            - c7n/choerodon-file
+            - c7n/choerodon-swagger
+            - c7n/choerodon-message
+            - c7n/choerodon-monitor
+            - c7n/choerodon-front-hzero
+            - c7n/choerodon-front
         sync-policy:
           from: quay
           to: aliyuncs

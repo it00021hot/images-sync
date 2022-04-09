@@ -38,7 +38,7 @@ jobs:
             - old: c7n/
               new: mogu-zh/
           filters:
-            - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
+            - ^1\.\d+(\.\d+)?(-\d+)?$
         EOF
         registry-manager sync -c config.yaml
     - name: Delete workflow runs

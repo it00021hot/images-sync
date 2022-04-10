@@ -40,6 +40,9 @@ jobs:
             - c7n/choerodon-monitor
             - c7n/choerodon-front-hzero
             - c7n/choerodon-front
+            - c7n/agile-service
+            - c7n/knowledgebase-service
+            - c7n/elasticsearch-kb
         sync-policy:
           from: quay
           to: aliyuncs

@@ -16,7 +16,7 @@ jobs:
       TO_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       TO_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
     steps:
-    - name: Quay to Aliyun
+    - name: k8s to Aliyun
       run: |
         cat << EOF >config.yaml
         registries:
@@ -37,7 +37,7 @@ jobs:
             - old: ingress-nginx/
               new: k8s-lzh/
           filters:
-            - ^1\.\d+(\.\d+)?(-\d+)?$
+            - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
         EOF
         registry-manager sync -c config.yaml
     - name: Delete workflow runs

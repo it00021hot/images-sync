@@ -74,8 +74,6 @@ jobs:
             replace:
               - old: kaniko-project/
                 new: k8s-lzh/kaniko-
-            filters:
-              - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
           EOF
           registry-manager sync -c config.yaml
       - name: Delete workflow runs

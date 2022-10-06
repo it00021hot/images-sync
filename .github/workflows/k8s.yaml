@@ -16,35 +16,70 @@ jobs:
       TO_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       TO_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
     steps:
-    - name: k8s to Aliyun
-      run: |
-        cat << EOF >config.yaml
-        registries:
-          aliyuncs:
-            registry: https://registry.aliyuncs.com
-            username: $TO_USERNAME
-            password: $TO_PASSWORD
-          gcr:
-            registry: https://k8s.gcr.io
-            repositories:
-            - ingress-nginx/kube-webhook-certgen
-            - ingress-nginx/controller
-            - kaniko-project/executor
-        sync-policy:
-          from: gcr
-          to: aliyuncs
-          dry-run: false
-          replace:
-            - old: ingress-nginx/
-              new: k8s-lzh/
-            - old: kaniko-project/
-              new: k8s-lzh/kaniko-
-          filters:
-            - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
-        EOF
-        registry-manager sync -c config.yaml
-    - name: Delete workflow runs
-      uses: GitRML/delete-workflow-runs@main
-      with:
-        retain_days: 7
-        keep_minimum_runs: 3
+      - name: k8s to Aliyun
+        run: |
+          cat << EOF >config.yaml
+          registries:
+            aliyuncs:
+              registry: https://registry.aliyuncs.com
+              username: $TO_USERNAME
+              password: $TO_PASSWORD
+            gcr:
+              registry: https://k8s.gcr.io
+              repositories:
+              - ingress-nginx/kube-webhook-certgen
+              - ingress-nginx/controller
+              - kaniko-project/executor
+          sync-policy:
+            from: gcr
+            to: aliyuncs
+            dry-run: false
+            replace:
+              - old: ingress-nginx/
+                new: k8s-lzh/
+              - old: kaniko-project/
+                new: k8s-lzh/kaniko-
+            filters:
+              - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
+          EOF
+          registry-manager sync -c config.yaml
+      - name: Delete workflow runs
+        uses: GitRML/delete-workflow-runs@main
+        with:
+          retain_days: 7
+          keep_minimum_runs: 3
+  sync-kaniko:
+    runs-on: ubuntu-20.04
+    container: setzero/registry-manager
+    env:
+      TO_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      TO_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+    steps:
+      - name: kaniko to Aliyun
+        run: |
+          cat << EOF >config.yaml
+          registries:
+            aliyuncs:
+              registry: https://registry.aliyuncs.com
+              username: $TO_USERNAME
+              password: $TO_PASSWORD
+            gcr:
+              registry: https://gcr.io
+              repositories:
+              - kaniko-project/executor
+          sync-policy:
+            from: gcr
+            to: aliyuncs
+            dry-run: false
+            replace:
+              - old: kaniko-project/
+                new: k8s-lzh/kaniko-
+            filters:
+              - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
+          EOF
+          registry-manager sync -c config.yaml
+      - name: Delete workflow runs
+        uses: GitRML/delete-workflow-runs@main
+        with:
+          retain_days: 7
+          keep_minimum_runs: 3

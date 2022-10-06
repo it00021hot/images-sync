@@ -74,6 +74,8 @@ jobs:
             replace:
               - old: kaniko-project/
                 new: k8s-lzh/kaniko-
+            filters:
+              - latest                 
           EOF
           registry-manager sync -c config.yaml
       - name: Delete workflow runs

@@ -29,6 +29,7 @@ jobs:
             repositories:
             - ingress-nginx/kube-webhook-certgen
             - ingress-nginx/controller
+            - kaniko-project/executor
         sync-policy:
           from: gcr
           to: aliyuncs
@@ -36,6 +37,8 @@ jobs:
           replace:
             - old: ingress-nginx/
               new: k8s-lzh/
+            - old: kaniko-project/
+              new: k8s-lzh/kaniko-
           filters:
             - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
         EOF

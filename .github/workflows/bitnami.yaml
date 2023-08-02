@@ -28,6 +28,7 @@ jobs:
             registry: https://docker.io
             repositories:
             - bitnami/kafka
+            - bitnami/etcd
         sync-policy:
           from: docker
           to: aliyuncs

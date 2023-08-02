@@ -36,8 +36,6 @@ jobs:
           replace:
             - old: bitnami/
               new: it00021hot/bitnami_
-          filters:
-            - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
         EOF
         registry-manager sync -c config.yaml
     - name: Delete workflow runs

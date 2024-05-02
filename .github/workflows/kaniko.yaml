@@ -36,7 +36,7 @@ jobs:
               - old: kaniko-project/
                 new: base/kaniko-
             filters:
-              - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$               
+              - '^[Vv]?([1-9]+)([2-9\.]+)(\.\d+){1,2}(-alpha\.\d+)?$'             
           EOF
           registry-manager sync -c config.yaml
       - name: Delete workflow runs

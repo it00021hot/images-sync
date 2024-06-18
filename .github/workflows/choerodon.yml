@@ -9,7 +9,7 @@ on:
     branches: [ main ]
 
 jobs:
-  sync-quay:
+  sync-choerodon:
     runs-on: ubuntu-20.04
     container: setzero/registry-manager
     env:
@@ -51,7 +51,7 @@ jobs:
             - old: c7n/
               new: mogu-zh/
           filters:
-            - ^1\.\d+(\.\d+)?(-\d+)?$
+            - ^2\.\d+(\.\d+)?(-\d+)?$
         EOF
         registry-manager sync -c config.yaml
     - name: Delete workflow runs

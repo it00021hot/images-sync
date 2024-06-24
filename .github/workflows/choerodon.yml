@@ -43,6 +43,7 @@ jobs:
             - c7n/agile-service
             - c7n/knowledgebase-service
             - c7n/elasticsearch-kb
+            - c7n/market-service
         sync-policy:
           from: quay
           to: aliyuncs

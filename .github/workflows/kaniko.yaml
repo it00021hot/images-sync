@@ -27,7 +27,7 @@ jobs:
             gcr:
               registry: https://gcr.io
               repositories:
-              - kaniko-project/executor
+              - kaniko-project/executor:v1.23.2
           sync-policy:
             from: gcr
             to: harbor

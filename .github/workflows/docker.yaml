@@ -9,7 +9,7 @@ on:
     branches: [ main ]
 
 jobs:
-  sync-quay:
+  sync-docker:
     runs-on: ubuntu-20.04
     container: setzero/registry-manager
     env:
@@ -27,8 +27,8 @@ jobs:
           docker:
             registry: https://docker.io
             repositories:
-            - bitnami/kafka
-            - bitnami/etcd
+            # - bitnami/kafka
+            # - bitnami/etcd
             - guiji2025/heygem.ai
             - guiji2025/fish-speech-ziming
             - guiji2025/fun-asr
@@ -37,8 +37,8 @@ jobs:
           to: aliyuncs
           dry-run: false
           replace:
-            - old: bitnami/
-              new: it00021hot/bitnami_
+            # - old: bitnami/
+              # new: it00021hot/bitnami_
             - old: guiji2025/
               new: it00021hot/guiji2025_
         EOF

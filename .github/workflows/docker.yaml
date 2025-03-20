@@ -1,4 +1,4 @@
-name: bitnami
+name: docker
 
 on:
   schedule:
@@ -16,7 +16,7 @@ jobs:
       TO_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       TO_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
     steps:
-    - name: Quay to Aliyun
+    - name: docker hub to Aliyun
       run: |
         cat << EOF >config.yaml
         registries:
@@ -29,6 +29,9 @@ jobs:
             repositories:
             - bitnami/kafka
             - bitnami/etcd
+            - guiji2025/heygem.ai
+            - guiji2025/fish-speech-ziming
+            - guiji2025/fun-asr
         sync-policy:
           from: docker
           to: aliyuncs
@@ -36,6 +39,8 @@ jobs:
           replace:
             - old: bitnami/
               new: it00021hot/bitnami_
+            - old: guiji2025/
+              new: it00021hot/guiji2025_
         EOF
         registry-manager sync -c config.yaml
     - name: Delete workflow runs

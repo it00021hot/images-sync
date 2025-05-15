@@ -29,9 +29,10 @@ jobs:
             repositories:
             # - bitnami/kafka
             # - bitnami/etcd
-            - guiji2025/heygem.ai
-            - guiji2025/fish-speech-ziming
-            - guiji2025/fun-asr
+            # - guiji2025/heygem.ai
+            # - guiji2025/fish-speech-ziming
+            # - guiji2025/fun-asr
+            - vllm/vllm-openai:latest
         sync-policy:
           from: docker
           to: aliyuncs
@@ -39,8 +40,10 @@ jobs:
           replace:
             # - old: bitnami/
               # new: it00021hot/bitnami_
-            - old: guiji2025/
-              new: it00021hot/guiji2025_
+            # - old: guiji2025/
+            #   new: it00021hot/guiji2025_
+            - old: vllm/
+              new: it00021hot/vllm_              
         EOF
         registry-manager sync -c config.yaml
     - name: Delete workflow runs

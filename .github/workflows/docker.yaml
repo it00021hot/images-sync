@@ -10,7 +10,7 @@ on:
 
 jobs:
   sync-docker:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     container: setzero/registry-manager
     env:
       TO_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}

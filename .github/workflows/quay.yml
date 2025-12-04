@@ -30,6 +30,8 @@ jobs:
             - jetstack/cert-manager-cainjector
             - jetstack/cert-manager-webhook
             - jetstack/cert-manager-controller
+            - coreos/etcd:v3.6.6
+        
         sync-policy:
           from: quay
           to: aliyuncs
@@ -37,6 +39,8 @@ jobs:
           replace:
             - old: jetstack/
               new: it00021hot/jetstack_
+            - old: coreos/
+              new: it00021hot/coreos_
           filters:
             - ^[Vv]?\d+\.\d+(\.\d+)?(-\d+)?$
         EOF
